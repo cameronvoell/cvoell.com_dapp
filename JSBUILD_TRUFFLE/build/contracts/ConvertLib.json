@@ -1,0 +1,74 @@
+{
+  "contract_name": "ConvertLib",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "conversionRate",
+          "type": "uint256"
+        }
+      ],
+      "name": "convert",
+      "outputs": [
+        {
+          "name": "convertedAmount",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x60606040523415600b57fe5b5b60748061001a6000396000f300606060405263ffffffff60e060020a60003504166396e4ee3d81146020575bfe5b602c600435602435603e565b60408051918252519081900360200190f35b8181025b929150505600a165627a7a7230582020b8d6b48f2ad9ef7735237368997b280a79e28f245f646978d7cac6506f579c0029",
+  "networks": {
+    "1498762604776": {
+      "events": {},
+      "links": {},
+      "address": "0x14125c79f736c298a99870f7ecdfebdd78fb611f",
+      "updated_at": 1498762872975
+    },
+    "1498885410884": {
+      "events": {},
+      "links": {},
+      "address": "0xeb847687cdfe1577c573dafb72815ba88e8096cc",
+      "updated_at": 1498885444995
+    },
+    "1498928035623": {
+      "events": {},
+      "links": {},
+      "address": "0xfef9f24f972b57a17d4b3ef9a2f4a99a66f35f8f",
+      "updated_at": 1498928617152
+    },
+    "1498928940152": {
+      "events": {},
+      "links": {},
+      "address": "0x08d38359057c6bfe705eb57d97c44ff49b9e0753",
+      "updated_at": 1498929039892
+    },
+    "1498939584544": {
+      "events": {},
+      "links": {},
+      "address": "0x64fb71a0ddb98b2fc9f475b48dac605ff6abc3a7",
+      "updated_at": 1498939592739
+    },
+    "1499021962492": {
+      "events": {},
+      "links": {},
+      "address": "0x7bc212891fd005e131bd5a78ce2845b0b5949f47",
+      "updated_at": 1499021984210
+    },
+    "1499021997708": {
+      "events": {},
+      "links": {},
+      "address": "0x48c6def419eaf71db477e79e0a2549c3a37ec462",
+      "updated_at": 1499022007333
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1499022007333
+}

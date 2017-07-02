@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title></title>
+<meta name=generator content="Org mode">
+<link rel=stylesheet href=static/home.css>
+<script src="./app.js"></script>
+<script><!--
+function CodeHighlightOn(elem,id)
+{var target=document.getElementById(id);if(null!=target){elem.cacheClassElem=elem.className;elem.cacheClassTarget=target.className;target.className="code-highlighted";elem.className="code-highlighted";}}
+function CodeHighlightOff(elem,id)
+{var target=document.getElementById(id);if(elem.cacheClassElem)
+elem.className=elem.cacheClassElem;if(elem.cacheClassTarget)
+target.className=elem.cacheClassTarget;}
+</script>
+<div id=content>
+<p>░░░░░░░░░░░░░░░░░░░░░░░░░░
+<div id=outline-container-orgf4a59e4 class=outline-2>
+<h2 id=orgf4a59e4>Hi, I'm Cameron</h2>
+<p>I like building software (Android Apps, Solidity Contracts, Web Apps), swimming in the SF Bay, and listening to music. I previously worked for JPMorgan, Stitcher Podcasts, Deezer Music, and most recently, Frankly Inc. In case you want to contact me,
+send electronic mail to cameronvoell@gmail.com. I'm <a href=https://github.com/cameronvoell>@cameronvoell on GitHub</a>.
+</div>
+<div id=outline-container-org564ee25 class=outline-2>
+<h2 id=org564ee25>Articles</h2>
+<div class=outline-text-2 id=text-org564ee25>
+<ul class=org-ul><li><a href=https://medium.com/@cvoell/quito-ecuador-erupts-with-character-and-hopefully-not-lava-d12554f96d84 target="_blank">#0 - Quito, Ecuador erupts with character (and hopefully not lava)</a> (October 2015)<li><a href=https://google.com target="_blank">#1 - "Proof of Read” — Rewarding readers of your articles with your own Ethereum based tokens </a> (June 2017)
+</ul>
+</div>
+</div>
+<h2> Proof of Read Token (see article #1 above)</h2>
+<br>Detected Network: <span class="black"><span id="network"></span></span>
+<div id=tokenDisplay>
+Address: <span class="black"><span id="address"></span></span>
+<br>Your Proof of Read Token Balance: <span class="black"><span id="balance"></span></span>
+<br>
+  <br><label for="articleNum">Article Number:</label><input type="text" id="articleNum" placeholder="e.g., 1"></input>
+  <br><label for="key">Article Key:</label><input type="text" id="articleKey" placeholder="e.g., magic password"></input>
+  <br><br><button id="claim" onclick="App.claimReadership()">Claim Proof of Read</button>
+  <br><br>
+  <span id="status"></span>
+</div>
+<div id=tokenExplanation>
+<br>To Claim Proof of Read Tokens from Above Articles:
+<br>
+<br>1. Download the Metamask Browser Extension for Chrome(link) or Firefox(link).
+ <br>2. Switch to  an account in Metamask the fulfills one of the two following qualification:
+ <br>a) Ethereum Beginner - Account has TEST Ether on the Rinkeby test network obtained easily through the active Rinkeby TEST Eth "Faucet"
+ <br>b) Eth Advanced - Account has real Ether on the main network, and has been SMS verified using the accounts page in Parity
+ <br>
+ <br>* For more information read article #1 above.
+</div>
+</div>
