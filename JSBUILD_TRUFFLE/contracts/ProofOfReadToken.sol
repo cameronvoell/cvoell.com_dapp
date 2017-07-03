@@ -5,24 +5,25 @@ contract ParityProofOfSMSInterface {
 }
 
 contract ProofOfReadToken {
-    
     ParityProofOfSMSInterface public proofOfSms;
     
     //maps reader addresses to a map of story num => have claimed readership
     mapping (address => mapping(uint256 => bool)) public readingRegister;
-    
     //article hash to key hash
     mapping (string => bytes32) articleKeyHashRegister; 
-    
     //story num to article hash
     mapping (uint256 => string) public publishedRegister; 
-    
+    //set the max number of claimable tokens for each article
+    mapping (string => uint256) remainingTokensForArticle;
+
     uint256 public numArticlesPublished;
     address public publishingOwner;
-    bool public shieldsUp;
+    uint256 public minSecondsBetweenPublishing;
+    uint256 public maxTokensPerArticle;
+    uint public timeOfLastPublish;
+    bool public shieldsUp; //require sms verification
     string ipfsGateway;
 
-    
     /* ERC20 fields */
     string public standard = "Token 0.1";
     string public name;
@@ -32,13 +33,21 @@ contract ProofOfReadToken {
     mapping (address => uint256) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
     
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
-
+    event Transfer (address indexed from, address indexed to, uint256 value);
+    event Approval (address indexed _owner, address indexed _spender, uint256 _value);
+    event ClaimResult (uint);
+    event PublishResult (uint);
 
     /* Initializes contract with initial supply tokens to the creator of the contract */
-    function ProofOfReadToken(string tokenName, uint8 decimalUnits, string tokenSymbol) {
+    function ProofOfReadToken(uint256 _minSecondsBetweenPublishing,
+                              uint256 _maxTokensPerArticle,
+                              string tokenName, 
+                              uint8 decimalUnits, 
+                              string tokenSymbol) {
+                                  
         publishingOwner = msg.sender;
+        minSecondsBetweenPublishing = _minSecondsBetweenPublishing; 
+        maxTokensPerArticle = _maxTokensPerArticle;
         name = tokenName;
         symbol = tokenSymbol;
         decimals = decimalUnits;
@@ -47,34 +56,65 @@ contract ProofOfReadToken {
     }
     
     /* Publish article */
-    function publish(string articleHash, bytes32 keyHash) {
-        if (msg.sender == publishingOwner) {
-            publishedRegister[numArticlesPublished] = articleHash;
-            articleKeyHashRegister[articleHash] = keyHash;
-            numArticlesPublished++;
+    function publish(string articleHash, bytes32 keyHash, uint256 numTokens) {
+        
+        if (msg.sender != publishingOwner) {
+            PublishResult(1);
+            throw;
+        } else if (numTokens > maxTokensPerArticle) {
+            PublishResult(2);
+            throw;
+        } else if (block.timestamp - timeOfLastPublish < minSecondsBetweenPublishing) {
+            PublishResult(3);
+            throw;
+        } else if (articleKeyHashRegister[articleHash] != 0) {
+            PublishResult(4);  //can't republish same article
+            throw;
         }
+        
+        timeOfLastPublish = block.timestamp;
+        publishedRegister[numArticlesPublished] = articleHash;
+        articleKeyHashRegister[articleHash] = keyHash;
+        numArticlesPublished++;
+        remainingTokensForArticle[articleHash] = numTokens;
+        PublishResult(3);
     }
     
-    /* Claim token */
-    function claimReadership(uint articleNum, string key) {
-        if (shieldsUp && !proofOfSms.certified(msg.sender)) 
-             throw; // Missing sms certification
-        if (balanceOf[msg.sender] + 1 < balanceOf[msg.sender])
-            throw; // Check for overflows
-        if (readingRegister[msg.sender][articleNum])
-            throw; //reader already claimed this article
-        if (keccak256(key) != articleKeyHashRegister[publishedRegister[articleNum]]) {
-            throw; //incorrect key or article does not exist
-        }
-            
+    /*Claim a token for an article */
+    function claimReadership(uint256 articleNum, string key) {
+        
+        if (shieldsUp && !proofOfSms.certified(msg.sender)) {
+            ClaimResult(1); //missing sms certification
+             throw;
+        } else if (readingRegister[msg.sender][articleNum]) {
+            ClaimResult(2); // user alread claimed
+            throw; 
+        } else if (remainingTokensForArticle[publishedRegister[articleNum]] <= 0) {
+            ClaimResult(3); //article out of tokens
+            throw;
+        } else if (keccak256(key) != articleKeyHashRegister[publishedRegister[articleNum]]) {
+            ClaimResult(4); //incorrect key
+            throw; 
+        } else if (balanceOf[msg.sender] + 1 < balanceOf[msg.sender]) {
+            ClaimResult(5); //overflow error
+            throw;
+        } 
+        
+        remainingTokensForArticle[publishedRegister[articleNum]]--;
+        totalSupply++;
         readingRegister[msg.sender][articleNum] = true;
         balanceOf[msg.sender] += 1;
-        totalSupply++;
+        
+        ClaimResult(0);
     }
     
     /* Check if an address has read a given article */
     function hasReadership(address toCheck, uint256 articleNum) public returns (bool) {
         return readingRegister[toCheck][articleNum];
+    }
+    
+    function getRemainingTokenForArticle(string articleHash) public returns (uint256) {
+        return remainingTokensForArticle[articleHash];
     }
     
     /* Send coins */
