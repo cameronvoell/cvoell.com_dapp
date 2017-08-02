@@ -22829,6 +22829,7 @@ window.App = {
       }
       if (whichNet == "4" || whichNet == "1")
       	self.refreshBalance();
+      	self.setSMSVerificationRequired();
     })
     });
   },
@@ -22847,6 +22848,23 @@ window.App = {
   setStatus: function(message) {
     var status = document.getElementById("status");
     status.innerHTML = message;
+  },
+
+  setSMSVerificationRequired: function() {
+    var self = this;
+    console.log("net:" + whichNet);
+
+    var proofOfReadToken;
+    ProofOfReadToken.deployed().then(function(instance) {
+      proofOfReadToken = instance;
+      return proofOfReadToken.shieldsUp.call(account, {from: account});
+    }).then(function(value) {
+      var smsVerificationRequiredElement = document.getElementById("smsVerificationRequired");
+      smsVerificationRequiredElement.innerHTML = value.valueOf();
+   }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error getting sms verification required; see log.");
+   });
   },
 
   refreshBalance: function() {
