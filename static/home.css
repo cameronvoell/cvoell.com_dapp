@@ -37,4 +37,26 @@ font:inherit;
 color:#cea;
 margin-left:0
 }
-
+video{
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+}
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+#bio{
+position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+min-width:30ex;
+max-width:90ex;
+margin:1em .8em;
+}
+#writing{
+background-color: #000;
+    background-color: rgba(0,0,0,0.5);
+padding:8px;
+}
+}
