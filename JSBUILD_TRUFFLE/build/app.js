@@ -22780,15 +22780,11 @@ window.App = {
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
       if (accs.length == 0) {
-        account = accounts[0];
+          self.setNetwork("Please Unlock Metamask")
+        self.setAddress("error");
         stopAccountInterval();
-        alert("There was an error fetching your accounts.");
-        return;
-      }
-
-      if (accs.length == 0) {
+        //alert("There was an error fetching your accounts.");
         account = accounts[0];
-        alert("There was an error fetching your accounts.");
         return;
       }
 
@@ -22831,7 +22827,7 @@ window.App = {
       	self.refreshBalance();
       	self.setSMSVerificationRequired();
     })
-    });
+    }); 
   },
 
   setNetwork: function(netId) {
@@ -22919,6 +22915,18 @@ window.addEventListener('load', function() {
     // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
     stopAccountInterval();
     showTokenInformation(false);
+    var acc = document.getElementsByClassName("accordion");
+    for (var i = 0; i < acc.length; i++) {
+      acc[i].onclick = function(){
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px"; 
+    }
+}
+}
     setNetworkOff();
   }
 

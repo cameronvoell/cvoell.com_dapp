@@ -4,7 +4,7 @@
 <title></title>
 <meta name=generator content="Org mode">
 <link rel=stylesheet href=static/home.css?v=2>
-<script src="./app.js?v=6"></script>
+<script src="./app.js?v=10"></script>
 <script><!--
 function CodeHighlightOn(elem,id)
 {var target=document.getElementById(id);if(null!=target){elem.cacheClassElem=elem.className;elem.cacheClassTarget=target.className;target.className="code-highlighted";elem.className="code-highlighted";}}
@@ -41,20 +41,22 @@ Your browser does not support the video tag.
 (see  <a href=https://github.com/cameronvoell/proof-of-read-token target="_blank">https://github.com/cameronvoell/proof-of-read-token)</a>
 <br>
 <br>Detected Network: <span class="black"><span id="network"></span></span>
-<div id=smsVerification>
-SMS Verification Required: <span class="black"><span id="smsVerificationRequired"></span></span>
-</div>
 <div id=tokenDisplay>
 Address: <span class="black"><span id="address"></span></span>
 <br>Your Proof of Read Token Balance: <span class="black"><span id="balance"></span></span>
 <br>
+<div id=smsVerification>
+SMS Verification Required: <span class="black"><span id="smsVerificationRequired"></span></span>
+</div>
   <br><label for="articleNum">Article Number:</label><input type="text" id="articleNum" placeholder="e.g., 1"></input>
   <br><label for="key">Article Key:</label><input type="text" id="articleKey" placeholder="e.g., magic password"></input>
-  <br><br><button id="claim" onclick="App.claimReadership()">Claim Proof of Read</button>
+  <br><br><button class="claim" id="claim" onclick="App.claimReadership()">Claim Proof of Read</button>
   <br><br>
   <span id="status"></span>
 </div>
 <div id=tokenExplanation>
+<button class="accordion">Click for more info</button>
+<div class="panel">
 <br>To Claim Proof of Read Tokens from Above Articles:
 <br>
 <br>1. Download the Metamask Browser Extension for Chrome(<a href=https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn target="_blank">link</a>) or Firefox(<a href=https://addons.mozilla.org/en-US/firefox/addon/ether-metamask target="_blank">link</a>).
@@ -63,5 +65,6 @@ Address: <span class="black"><span id="address"></span></span>
  <br>b) Eth Advanced - Account has real Ether on the main network, and has been SMS verified using the accounts page in Parity
  <br>
  <br>* For more information read article #2 above.
+</div>
 </div>
 </div>
